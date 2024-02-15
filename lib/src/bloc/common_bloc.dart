@@ -2,7 +2,10 @@ abstract class MyEvent {}
 
 abstract class MyState {}
 
-class StateInitialized extends MyState {}
+class StateInitialized extends MyState {
+  @override
+  String toString() => 'init...';
+}
 
 class StateLoading extends MyState {
   @override

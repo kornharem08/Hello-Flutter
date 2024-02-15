@@ -15,7 +15,7 @@ class ProductBloc extends Bloc<MyEvent, MyState> {
 
       final res = await http.get(
         Uri.parse(
-            'https://dummyjson.com/products?limit=10&skip=10&select=title,price'),
+            'https://dummyjson.com/products?limit=20&skip=10&select=title,price'),
       );
       if (res.statusCode != HttpStatus.ok) {
         emit(StateError(message: res.body));
@@ -25,8 +25,25 @@ class ProductBloc extends Bloc<MyEvent, MyState> {
       final json = jsonDecode(utf8.decode(res.bodyBytes));
       final products =
           (json['products'] as List).map((e) => Product.fromJson(e)).toList();
-
+      print('init products');
       emit(GetProductsStateSuccess(products: products));
+    });
+
+    on<GetProductEvent>((event, emit) async {
+      emit(StateLoading());
+
+      final res = await http.get(
+        Uri.parse(
+            'https://dummyjson.com/products/${event.id}?limit=10&skip=10&select=title,price'),
+      );
+      if (res.statusCode != HttpStatus.ok) {
+        emit(StateError(message: res.body));
+        return;
+      }
+
+      final json = jsonDecode(utf8.decode(res.bodyBytes));
+      final product = Product.fromJson(json);
+      emit(GetProductStateSuccess(product: product));
     });
   }
 }

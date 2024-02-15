@@ -1,7 +1,7 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
-import 'package:flutter_helloworld/src/pages/routes.dart';
+import 'package:flutter_helloworld/src/screens/routes.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _handleLogin() {
-    Navigator.pushNamed(context, AppRoute.home);
+    Navigator.pushReplacementNamed(context, AppRoute.home);
   }
 
   void _handleReset() {

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_helloworld/src/bloc/product/product_bloc.dart';
 import 'package:flutter_helloworld/src/bloc/common_bloc.dart';
+import 'package:flutter_helloworld/src/screens/product/product_details_screen.dart';
+import 'package:flutter_helloworld/src/screens/routes.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,8 +16,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     context.read<ProductBloc>().add(GetProductsEvent());
   }
 
@@ -34,11 +36,17 @@ class _HomePageState extends State<HomePage> {
               itemCount: state.products.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(state.products[index].title),
-                  subtitle:
-                      Text('ราคาสินค้า ${state.products[index].price} บาท'),
-                  leading: const Icon(Icons.shopping_cart),
-                );
+                    title: Text(state.products[index].title),
+                    subtitle:
+                        Text('ราคาสินค้า ${state.products[index].price} บาท'),
+                    leading: const Icon(Icons.shopping_cart),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductDetailScreen(
+                                  product: state.products[index])));
+                    });
               },
             );
           }
