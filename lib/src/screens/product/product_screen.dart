@@ -5,16 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_helloworld/src/bloc/product/product_bloc.dart';
 import 'package:flutter_helloworld/src/bloc/common_bloc.dart';
 import 'package:flutter_helloworld/src/screens/product/product_details_screen.dart';
-import 'package:flutter_helloworld/src/screens/routes.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class ProductScreen extends StatefulWidget {
+  const ProductScreen({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ProductScreen> createState() => _ProductScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ProductScreenState extends State<ProductScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -39,7 +38,10 @@ class _HomePageState extends State<HomePage> {
                     title: Text(state.products[index].title),
                     subtitle:
                         Text('ราคาสินค้า ${state.products[index].price} บาท'),
-                    leading: const Icon(Icons.shopping_cart),
+                    leading: CircleAvatar(
+                      backgroundImage:
+                          NetworkImage(state.products[index].image),
+                    ),
                     onTap: () {
                       Navigator.push(
                           context,
